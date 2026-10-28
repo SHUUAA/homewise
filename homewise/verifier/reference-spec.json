@@ -1,0 +1,118 @@
+{
+  "$comment": "Ground truth measured from 'From Klickpin.mp4'. The site occupies x30..689, y154..565 of the 720x720 video (660x412 'reference units'). Boxes are [x, y, w, h] in reference units.",
+  "video": "../../From Klickpin.mp4",
+  "siteCrop": { "x": 30, "y": 154, "w": 660, "h": 412 },
+  "viewport": { "width": 1320, "height": 824 },
+  "unitPx": 2,
+  "palette": {
+    "background": "#120f13",
+    "accent": "#f65f37",
+    "panel": "#28252b"
+  },
+  "fontFamilyIncludes": "Inter Tight",
+  "states": [
+    {
+      "id": "intro-0.0",
+      "description": "Black screen, split title with small picture between the words",
+      "videoTime": 0.1,
+      "action": { "type": "intro", "t": 0.05 },
+      "minTonalScore": 0.8,
+      "boxes": [{ "selector": "[data-verify='hero-title'] [data-bracket]", "box": [22, 168, 616, 84], "tol": 10 }]
+    },
+    {
+      "id": "intro-1.0",
+      "description": "Picture opening (~308x182), words closing the gap (99u) and growing",
+      "videoTime": 1.0,
+      "action": { "type": "intro", "t": 1.0 },
+      "minTonalScore": 0.7,
+      "boxes": [{ "selector": "[data-verify='hero-title'] [data-bracket]", "box": [68, 168, 539, 84], "tol": 10 }]
+    },
+    {
+      "id": "intro-1.5",
+      "description": "Picture almost full-bleed (601x356), merged title dropping towards the bottom",
+      "videoTime": 1.5,
+      "action": { "type": "intro", "t": 1.5 },
+      "minTonalScore": 0.5,
+      "minEdgeF1": 0.55,
+      "photoRegion": [0, 0, 660, 412],
+      "boxes": [{ "selector": "[data-verify='hero-title'] [data-bracket]", "box": [65, 239, 542, 84], "tol": 10 }]
+    },
+    {
+      "id": "hero",
+      "description": "Final hero with nav, hotspots, glass widgets and bracketed title",
+      "videoTime": 3.6,
+      "action": { "type": "intro", "t": 99 },
+      "minTonalScore": 0.5,
+      "minEdgeF1": 0.65,
+      "photoRegion": [0, 0, 660, 412],
+      "navActive": "home",
+      "texts": ["Home", "Services", "Technologies", "Our Clients", "Contacts", "Log In", "Sign Up", "Good Morning, Alex", "Quick Access", "24°C", "Bedroom", "House security", "Household needs", "Seamlessly", "Since 2016", "Get Free Trial", "(HOME)WISE", "NETWORK"],
+      "boxes": [
+        { "selector": "[data-verify='logo']", "box": [22.5, 13.5, 18, 18], "tol": 3 },
+        { "selector": "[data-verify='nav-pill']", "box": [216, 13.5, 228, 17.5], "tol": 10 },
+        { "selector": "[data-verify='login']", "box": [576, 13.5, 27, 17.5], "tol": 5 },
+        { "selector": "[data-verify='signup']", "box": [604, 13.5, 33, 17.5], "tol": 5 },
+        { "selector": "[data-verify='widget-climate']", "box": [479, 89, 158, 87], "tol": 3 },
+        { "selector": "[data-verify='widget-bedroom']", "box": [530, 181, 107, 54], "tol": 3 },
+        { "selector": "[data-verify='cta-trial']", "box": [530, 298, 63, 21], "tol": 3 },
+        { "selector": "[data-verify='hero-intro']", "box": [22, 70, 161, 37], "tol": 8 },
+        { "selector": "[data-verify='hero-title'] [data-bracket]", "box": [24, 312, 615, 85], "tol": 8 }
+      ]
+    },
+    {
+      "id": "services-security",
+      "description": "Pinned services, SECURITY face, tabs rail, footer row",
+      "videoTime": 5.6,
+      "action": { "type": "goto", "section": "services", "step": 0, "settle": 1800 },
+      "minTonalScore": 0.75,
+      "navActive": "services",
+      "tabActive": "security",
+      "texts": ["SECURITY", "Front Door", "Garage", "Camera Views", "AUTOMATION", "ENERGY", "CONCIERGE", "ANALYTICS", "(HOME)WISE NETWORK", "SINCE 2016"],
+      "boxes": [
+        { "selector": "[data-verify='service-card']", "box": [120, 110, 439, 195], "tol": 4 },
+        { "selector": "[data-verify='services-bracket-left']", "box": [22, 101, 28, 211], "tol": 3 },
+        { "selector": "[data-verify='services-bracket-right']", "box": [610, 101, 28, 211], "tol": 3 },
+        { "selector": "[data-verify='service-tabs']", "box": [null, 336, null, 14], "tol": 5 },
+        { "selector": "#services [data-verify='footer-row']", "box": [22, 380, 616, 8], "tol": 4 }
+      ]
+    },
+    {
+      "id": "services-concierge",
+      "description": "Pinned services after the cube flip to VIRTUAL CONCIERGE",
+      "videoTime": 7.0,
+      "action": { "type": "goto", "section": "services", "step": 1, "settle": 1800 },
+      "minTonalScore": 0.75,
+      "navActive": "services",
+      "tabActive": "concierge",
+      "texts": ["VIRTUAL CONCIERGE", "How can I help you?", "Today", "Kitchen cleaning", "Grocery delivery", "Garage", "Smart Light 2"],
+      "boxes": [{ "selector": "[data-verify='service-card']", "box": [120, 110, 439, 195], "tol": 4 }]
+    },
+    {
+      "id": "clients",
+      "description": "Our Clients gallery at rest",
+      "videoTime": 9.6,
+      "action": { "type": "goto", "section": "clients", "settle": 1600 },
+      "minTonalScore": 0.6,
+      "navActive": "clients",
+      "texts": ["OUR CLIENTS", "Scroll"],
+      "boxes": [
+        { "selector": "[data-verify='client-card-1']", "box": [114, 66, 114, 248], "tol": 6 },
+        { "selector": "[data-verify='client-card-2']", "box": [249, 66, 114, 248], "tol": 6 },
+        { "selector": "[data-verify='clients-title']", "box": [null, null, null, null], "tol": 0 },
+        { "selector": "[data-clients-title] > div", "box": [207, 336, 246, 55], "tol": 5 },
+        { "selector": "[data-verify='scroll-button']", "box": [585, 304, 34, 27], "tol": 3 },
+        { "selector": "#clients [data-verify='footer-row']", "box": [22, 380, 616, 8], "tol": 4 }
+      ]
+    },
+    {
+      "id": "clients-hover",
+      "description": "Hovering the 2nd card reveals the testimonial panel",
+      "videoTime": 11.0,
+      "action": { "type": "goto", "section": "clients", "settle": 1400, "hover": "[data-verify='client-card-1']" },
+      "minTonalScore": 0.6,
+      "navActive": "clients",
+      "texts": ["Explore this case", "SARAH"],
+      "boxes": [{ "selector": "[data-verify='client-card-1']", "box": [114, 66, 114, 248], "tol": 6 }]
+    }
+  ]
+}

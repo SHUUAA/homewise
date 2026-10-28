@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+/* -------------------------------------------------------------------------
+ * HomeWise design system
+ *
+ * The whole layout is authored in "reference units" (u). One unit equals
+ * one pixel of the 660×412 site frame measured from the video reference, so
+ * every value in the components can be compared 1:1 with the reference.
+ * Tailwind's spacing scale is bound to that unit: `left-120` = 120u.
+ * ---------------------------------------------------------------------- */
+:root {
+  --u: min(calc(100vw / 660), calc(100svh / 412));
+  --stage-w: calc(var(--u) * 660);
+  --stage-h: calc(var(--u) * 412);
+
+  --hw-bg: #120f13;
+  --hw-panel: #28252b;
+  --hw-pill: #2c2a2e;
+  --hw-card: #2a272d;
+  --hw-accent: #f65f37;
+  --hw-accent-soft: #ff8a62;
+  --hw-ink: #f4f2f5;
+  --hw-muted: rgba(244, 242, 245, 0.62);
+  --hw-line: rgba(244, 242, 245, 0.82);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --u: calc(100vw / 380);
+    --stage-w: calc(var(--u) * 380);
+    --stage-h: 100svh;
+  }
+}
+
+@theme {
+  --spacing: var(--u);
+
+  --color-hw-bg: #120f13;
+  --color-hw-panel: #28252b;
+  --color-hw-pill: #2c2a2e;
+  --color-hw-card: #2a272d;
+  --color-hw-accent: #f65f37;
+  --color-hw-accent-soft: #ff8a62;
+  --color-hw-ink: #f4f2f5;
+  --color-hw-muted: rgba(244, 242, 245, 0.62);
+  --color-hw-glass: rgba(74, 71, 76, 0.74);
+  --color-hw-glass-dark: rgba(52, 48, 53, 0.72);
+
+  --font-sans: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* font sizes in reference units */
+  --text-u4: calc(var(--u) * 4);
+  --text-u4h: calc(var(--u) * 4.5);
+  --text-u5: calc(var(--u) * 5);
+  --text-u5h: calc(var(--u) * 5.5);
+  --text-u6: calc(var(--u) * 6);
+  --text-u7: calc(var(--u) * 7);
+  --text-u8: calc(var(--u) * 8);
+  --text-u10: calc(var(--u) * 10);
+  --text-u16: calc(var(--u) * 16);
+  --text-u20: calc(var(--u) * 20);
+  --text-u38: calc(var(--u) * 38);
+  --text-u55: calc(var(--u) * 55);
+
+  --radius-u6: calc(var(--u) * 6);
+  --radius-u8: calc(var(--u) * 8);
+  --radius-u10: calc(var(--u) * 10);
+  --radius-u11: calc(var(--u) * 11);
+
+  --ease-hw: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-hw-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------------ base */
+html {
+  background: var(--hw-bg);
+  color: var(--hw-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* the page scrolls (Lenis), but without a visible scrollbar */
+html,
+body {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+body {
+  background: var(--hw-bg);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+@media (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+::selection {
+  background: var(--hw-accent);
+  color: #fff;
+}
+
+/* ------------------------------------------------------------ components */
+@layer components {
+  /* centred 660×412u artboard that every section lays out on */
+  .stage {
+    position: relative;
+    width: var(--stage-w);
+    height: var(--stage-h);
+    margin-inline: auto;
+  }
+
+  .section-screen {
+    position: relative;
+    height: 100svh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* thin "[ ]" corner brackets used all over the design */
+  .bracket-l,
+  .bracket-r {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--tick, calc(var(--u) * 23));
+    border-color: var(--bracket-color, var(--hw-line));
+    border-style: solid;
+    border-width: var(--bw, 1px) 0;
+    pointer-events: none;
+  }
+  .bracket-l {
+    left: 0;
+    border-left-width: var(--bw, 1px);
+  }
+  .bracket-r {
+    right: 0;
+    border-right-width: var(--bw, 1px);
+  }
+
+  /* four-corner reticle (icons, cursor, scroll button) */
+  .corners {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    --c: var(--corner-size, calc(var(--u) * 6));
+    --cc: var(--corner-color, var(--hw-line));
+    background:
+      linear-gradient(var(--cc), var(--cc)) top left / var(--c) 1px,
+      linear-gradient(var(--cc), var(--cc)) top left / 1px var(--c),
+      linear-gradient(var(--cc), var(--cc)) top right / var(--c) 1px,
+      linear-gradient(var(--cc), var(--cc)) top right / 1px var(--c),
+      linear-gradient(var(--cc), var(--cc)) bottom left / var(--c) 1px,
+      linear-gradient(var(--cc), var(--cc)) bottom left / 1px var(--c),
+      linear-gradient(var(--cc), var(--cc)) bottom right / var(--c) 1px,
+      linear-gradient(var(--cc), var(--cc)) bottom right / 1px var(--c);
+    background-repeat: no-repeat;
+  }
+
+  .glass {
+    background: var(--color-hw-glass);
+    backdrop-filter: blur(14px) saturate(120%);
+    -webkit-backdrop-filter: blur(14px) saturate(120%);
+  }
+  .glass-dark {
+    background: var(--color-hw-glass-dark);
+    backdrop-filter: blur(12px) saturate(115%);
+    -webkit-backdrop-filter: blur(12px) saturate(115%);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .eyebrow {
+    font-size: var(--text-u5);
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--hw-ink);
+  }
+
+  .orb {
+    display: grid;
+    place-items: center;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.32);
+    color: #fff;
+    transition:
+      background-color 0.3s var(--ease-hw-out),
+      transform 0.3s var(--ease-hw-out);
+  }
+  .orb:hover {
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(1.06);
+  }
+  .orb[data-on="true"] {
+    background: #fff;
+    color: #2b282d;
+  }
+}
+
+/* ------------------------------------------------------------- keyframes */
+@keyframes hw-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+.dot-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: inherit;
+  animation: hw-pulse 2.4s var(--ease-hw) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
